@@ -1,16 +1,36 @@
-import logo from './logo.svg';
+import styles from 'react';
+import { useState } from 'react';
 import './App.css';
 
 export const App = () => {
+
+  const [value, setValue] = useState("");
+  const [list, setList] = useState([]);
+  const [error, setError] = useState("");
+
+  const onInputButtonClick = () => {
+    const promptValue = prompt('Введите значение ');
+    if (promptValue && promptValue.length >= 3) {
+      setValue(promptValue);
+      setError('');
+    } else {
+      setValue('');
+      setError('Введенное значение должно содержать минимум 3 символа!');
+    }
+    
+    console.log(`You entered ${promptValue}`);
+  }
+
 	return (
     <div className="app">
     <h1 className={styles['page-heading']}>Ввод значения</h1>
     <p className={styles['no-margin-text']}>
-      Текущее значение <code>value</code>: "<output className="current-value"></output>"
+      Текущее значение <code>value</code>: "<output className="current-value">{value}</output>"
     </p>
-    <div className="error">Введенное значение должно содержать минимум 3 символа</div>
+    <div className="error">{error}</div>
     <div className={styles['buttons-container']}>
-      <button className="button">Ввести новое</button>
+      <button className="button" onClick = {onInputButtonClick} >Ввести новое</button>
+      <output>{value}</output>
       <button className="button" disabled>Добавить в список</button>
     </div>
     <div className={styles['list-container']}>
